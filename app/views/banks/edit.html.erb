@@ -1,0 +1,94 @@
+<div class="page-header">
+    <div class="icon">
+        <span class="ico-arrow-right"></span>
+    </div>
+    <h1><%= @bank.name %> <small>Modifier le profil</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span6">
+    <%= render 'layouts/flash_messages' %>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+     
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-expand"></span>
+        </div>
+        <h2>Modifier le profil de <%= @bank.name %></h2>
+      </div>
+      <div class = "data-fluid">
+        <%= form_tag ("/bank/update") do %>
+          <%= hidden_field_tag "id", "#{@bank.id}" %>
+          <div class = "<%= @namecss %>">
+            <div class = "span3">Nom</div>
+            <div class = "span9">	        
+              <%= text_field_tag "name", @bank.name, :placeholder => "Nom de la banque" %>
+            </div>
+          </div>
+          <div class = "<%= @type_idcss %>">
+            <div class = "span3">Type</div>
+            <div class = "span9">		        
+              <%= collection_select(:post, :bank_type_id, @bank_types, :id, :name, options ={:prompt => true, :selected => @bank.bank_type_id}) %>
+            </div>
+          </div>          
+                 
+          <div class = "row-form">
+            <div class="span9">
+              <%= button_tag(:name => "Modifier le profil", :data => {:disable_with => "Veuillez patienter"}, :class => "btn") do %>
+                Modifier le profil <div class="icon-arrow-next icon-white"></div> 
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class = "span6">
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-list-3"></span>
+        </div>
+        <h2>Liste des banques</h2>
+      </div>
+      <div class = "head yellow" >
+		    <div class = "icon" >
+		      <span class = "ico-pen-2"></span>		      
+		    </div>  
+		    <h2>Visualisation des banques</h2>
+		  </div>	
+		  <div id="services">
+		    <%= render partial: "banks", :locals => {:banks => @banks} %> 
+		  </div>	 
+		  <% unless @banks.blank? %>
+		    <div id = "pagination">
+          <%= paginate @banks, :params => { :controller => :inheribankstors, :action => :index } %>
+        </div>
+      <% end %> 
+    </div>
+  </div>
+</div>

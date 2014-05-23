@@ -1,0 +1,138 @@
+<div class="page-header">
+    <div class="icon">
+        <span class="ico-arrow-right"></span>
+    </div>
+    <h1><%= @inheritor.name %><small>Editer les données relatives à l'ayant droit</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span6">
+    <%= render 'layouts/flash_messages' %>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>     
+    
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-pen-2"></span>
+        </div>
+        <h2>Modifier le profil de l'ayant droit</h2>
+      </div>
+      <div class = "data-fluid">
+        <%= form_tag("/inheritor/update") do %>
+          <%= hidden_field_tag "id", "#{@inheritor.id}" %>
+          <div class = "<%= @phone_numbercss %>">
+            <div class = "span3">Téléphone</div>
+            <div class = "span9">	        
+              <%= text_field_tag "phone_number", @inheritor.phone_number, :placeholder => "Numéro de téléphone de l'ayant droit" %>
+            </div>
+          </div>
+          <div class = "<%= @emailcss %>">
+            <div class = "span3">Email</div>
+            <div class = "span9">	        
+              <%= text_field_tag "email", @inheritor.email, :placeholder => "Email de l'ayant droit" %>
+            </div>
+          </div>
+          <div class = "<%= @addresscss %>">
+            <div class = "span3">Adresse</div>
+            <div class = "span9">	        
+              <%= text_field_tag "address", @inheritor.address, :placeholder => "Adresse de l'ayant droit" %>
+            </div>
+          </div>
+          <div class = "<%= @account_numbercss %>">
+            <div class = "span3">Numéro de compte</div>
+            <div class = "span9">	        
+              <%= text_field_tag "account_number", @inheritor.account_number, :placeholder => "Numéro de compte de l'ayant droit" %>
+            </div>
+          </div>
+          <div class = "<%= @type_idcss %>">
+            <div class = "span3">Type</div>
+            <div class = "span9">		        
+              <%= collection_select(:post, :inheritor_type_id, @inheritors_types, :id, :label, options ={:prompt => true, :selected => @inheritor.inheritor_type_id}) %>
+            </div>
+          </div>          
+          <br />
+          <div class = "row-form">
+            <div class="span9">
+              <%= button_tag(:name => "Modifier le profil", :data => {:disable_with => "Veuillez patienter"}, :class => "btn") do %>
+                Modifier le profil <div class="icon-arrow-next icon-white"></div> 
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class = "span6">
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-list-3"></span>
+        </div>
+        <h2>Liste des opérations associées</h2>
+      </div>
+      <div class = "head dblue" >
+		    <div class = "icon" >
+		      <span class = "ico-pen-2"></span>		      
+		    </div>  
+		    <h2><%= @inheritor.name %></h2>
+		  </div>		  
+		  <% unless @associated_services.blank? %>
+		    <table class = "table" cellpading = "0" cellspacing = "0" width = "100%">
+          <thead>
+            <tr>
+              <th width = "100%">
+                Noms des services
+              </th>
+            </tr>
+          </thead>
+          <tbody>            
+	          <% @associated_services.each do |associated_service| %>	
+	            <tr>
+	              <td>	              		      		    
+                  <a data-toggle="collapse" data-target="#associated_service<%= associated_service.id %>">
+                    <%= associated_service.name %>
+                  </a>                   
+                  <div id="associated_service<%= associated_service.id %>" class="collapse">
+                    <ul class = "the-icons">
+                      <% @inheritor.operation_types.where("service_id = #{associated_service.id}").each do |operation_type| %>
+                        <li>
+                          <i class = "icon-screenshot"></i>
+                          <% @percentage = ActiveRecord::Base.connection.execute("SELECT percentage FROM inheritors_operation_types WHERE inheritor_id = #{@inheritor.id} AND operation_type_id = #{operation_type.id}").first["percentage"] %>
+                          <%= "#{operation_type.name}: #{@percentage}%" %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>  
+                </td>         
+              </tr>
+	          <% end %>
+		      </tbody>
+		    </table>			  		  		  		  		  			    
+	    <% end %> 	  
+    </div>
+  </div>
+</div>

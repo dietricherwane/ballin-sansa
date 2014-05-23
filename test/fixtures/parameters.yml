@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  back_office_url: MyString
+  emission_authentication_token: MyString
+  reception_authentication_token: MyString
+
+two:
+  back_office_url: MyString
+  emission_authentication_token: MyString
+  reception_authentication_token: MyString

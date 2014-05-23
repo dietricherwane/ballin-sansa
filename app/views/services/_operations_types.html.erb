@@ -1,0 +1,48 @@
+<script type="text/javascript" language="JavaScript">
+  $(document).on('ready page:load', function(){    
+    options =	{ 
+			position : 'top',
+			align	 : 'center',						
+			innerHtmlStyle: {
+								color:'#FFFFFF', 
+								'text-align':'left',
+								padding:'2px',
+								'font-size':'13px'
+							},																
+			themeName: 	'all-grey',
+			themePath: 	'../../../images/jquerybubblepopup-theme'
+		};  
+  });
+</script>
+
+<table cellpadding = "0" cellspacing = "0" width = "100%" class = "table">
+  <thead>
+    <tr>
+      <th width = "50%">Nom</th>
+      <th width = "50%">Type d'opération</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @operations_types.blank? %>
+			<tr>
+				<td colspan = "2">Aucun type d'opération à afficher</td>
+			</tr>
+		<% else %>
+		  <% @operations_types.each do |operation_type| %>		    
+		    <tr>
+		      <td>
+		        <%= operation_type.name %>
+					</td>
+					<td>
+					  <% if operation_type.credit_status == -1 %>
+		          <span class = "label label-important">Débit</span>	
+		        <% else %>
+		          <span class = "label label-success">Crédit</span>	
+		        <% end %>		        						  
+					</td>
+			  </tr>
+			<% end %>
+		<% end %>
+  </tbody>
+</table>	
+

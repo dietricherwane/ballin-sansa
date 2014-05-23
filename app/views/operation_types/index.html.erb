@@ -1,0 +1,172 @@
+<script type="text/javascript" language="JavaScript">
+  $(document).on('ready page:load', function(){
+    $(function(){
+      $("#operation_name_section").hide();
+    });
+    
+    $("#post_service_id").change(function() {
+      var service = this.options[this.selectedIndex].text;
+      if(service == "-Veuillez choisir un service-"){
+        $("#operation_name_section").hide("slow");
+      }
+      else{
+        $("#operation_name_section").show("slow");
+      } 
+    });    
+  });
+</script>
+<div class="page-header">
+    <div class="icon">
+        <span class="ico-arrow-right"></span>
+    </div>
+    <h1>Types d'opérations<small>Associer des types d'opérations aux services</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span6">
+    <%= render 'layouts/flash_messages' %>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>     
+    
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-pen-2"></span>
+        </div>
+        <h2>Créer un type d'opération</h2>
+      </div>
+      <div class = "data-fluid">
+        <%= form_tag("/operation/create") do %>
+          <%#= devise_error_messages! %>
+          <div class = "<%= @service_idcss %>">
+            <div class = "span3">Services</div>
+            <div class = "span9">		        
+              <%= collection_select(:post, :service_id, @services, :id, :name, options ={:prompt => "-Veuillez choisir un service-"}) %>
+            </div>
+          </div>
+          <div id = "operation_name_section">
+            <div class = "<%= @operation_type_namecss %>">
+              <div class = "span3">Nom</div>
+              <div class = "span9">	                      
+                <%= text_field_tag "operation_type_name", "", :placeholder => "Nom du type de service" %>    
+              </div>
+            </div> 
+            <div class = "<%= @commentcss %>">
+              <div class = "span3">Commentaire</div>
+              <div class = "span9">	                      
+                <%= text_field_tag "comment", "", :placeholder => "Slogan du type d'opération" %>    
+              </div>
+            </div> 
+            <div class = "<%= @type_css %>">
+              <div class = "span3">Type</div>
+              <div class = "span9">	                      
+                <%= select "type", "id", {"Débit" => -1, "Crédit" => 1} %>    
+              </div>
+            </div>        
+            <br />
+            
+            <% if current_user.profile.create_operation %>
+              <div class = "row-form">
+                <div class="span9">
+                  <%= button_tag(:name => "Créer un type d'opération", :data => {:disable_with => "Veuillez patienter"}, :class => "btn") do %>
+                    Créer un type d'opération <div class="icon-arrow-next icon-white"></div> 
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class = "span6">
+    <div class = "block">
+      
+      <div class = "head red" >
+		    <div class = "icon" >
+		      <span class = "ico-pen-2"></span>		      
+		    </div>  
+		    <h2>Liste des types d'opérations par service</h2>
+		  </div>
+		  <% unless @services.blank? %>
+		    <table class = "table" cellpading = "0" cellspacing = "0" width = "100%">
+          <thead>
+            <tr>
+              <th width = "100%">
+                Nom du service
+              </th>
+            </tr>
+          </thead>
+          <tbody>            
+	          <% @services.each do |service| %>	
+	            <tr>
+	              <td>	              		      		    
+                  <a data-toggle="collapse" data-target="#service<%= service.id %>">
+                    <%= service.name %>
+                  </a>                   
+                  <div id="service<%= service.id %>" class="collapse">
+                    <ul class = "the-icons">
+                      <% @operation_types = service.operation_types.order("name") %>
+                      <% if @operation_types.blank? %>
+                        <li> 
+                          Aucun type d'opération n'a été créé
+                        </li>
+                      <% else %>
+                        <% @operation_types.each do |operation_type| %>
+                          <li>
+                            <i class = "icon-screenshot"></i>
+                            <%= operation_type.name %>&nbsp;&nbsp;&nbsp;  
+                            <% if operation_type.name != "ACHAT_VC" %>
+                              <% if operation_type.credit_status == -1 %>
+		                            <span class = "label label-important">Débit</span>	
+		                          <% else %>
+		                            <span class = "label label-success">Crédit</span>	
+		                          <% end %>
+		                          &nbsp;&nbsp;&nbsp; 	
+		                          <% if current_user.profile.edit_operation %>
+		                            <%= link_to "<i class = 'icon-pencil'></i>".html_safe, edit_operation_type_path(operation_type.id) %>	                        		                        
+		                            <% if operation_type.disabled? %>			      
+				                          <%= link_to "<i class = 'icon-ok'></i>".html_safe, enable_operation_type_path(operation_type.id), :confirm => "Êtes vous sûr de vouloir activer cette opération?" %>
+				                        <% else %>
+				                          <%= link_to "<i class = 'icon-remove'></i>".html_safe, disable_operation_type_path(operation_type.id), :confirm => "Êtes vous sûr de vouloir activer cette opération?" %>
+				                        <% end %>
+				                      <% end %>
+				                    <% end %>
+                          </li>
+                        <% end %>
+                      <% end %>
+                    </ul>
+                  </div>  
+                </td>         
+              </tr>
+	          <% end %>
+		      </tbody>
+		    </table>			  		  		  		  		  			    
+	    <% end %> 	  
+    </div>
+  </div>
+</div>
+

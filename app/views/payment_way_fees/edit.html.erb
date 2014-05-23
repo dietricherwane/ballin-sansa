@@ -1,0 +1,97 @@
+<div class="page-header">
+    <div class="icon">
+        <span class="ico-arrow-right"></span>
+    </div>
+    <h1><%= @payment_way.name %><small>Modifier les informations du moyen de paiement</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span6">
+    <%= render 'layouts/flash_messages' %>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+     
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-expand"></span>
+        </div>
+        <h2>Modifier les informations</h2>
+      </div>
+      <div class = "data-fluid">
+        <%= form_tag ("/wallet/update") do %>
+          <%= hidden_field_tag "id", @payment_way.id %>
+          <div class = "row-form">
+            <div class = "span3">Frais de transport</div>
+            <div class = "span9">	 
+              <div class = "radio">                 
+                <%= radio_button_tag "percentage", "true", @payment_way.percentage %>              
+              </div>Pourcentage (%) 
+              <div class = "radio">                       
+                <%= radio_button_tag "percentage", "false", !@payment_way.percentage %> 
+              </div>Montant fixe (F CFA)
+            </div>
+          </div>  
+          <div class = "<%= @feecss %>">
+            <div class = "span3">Valeur</div>
+            <div class = "span9">	                      
+              <%= text_field_tag "fee", @payment_way.fee, :placeholder => "Valeur des frais de transport" %>                 
+            </div>            
+          </div>                 
+                 
+          <div class = "row-form">
+            <div class="span9">
+              <%= button_tag(:name => "Modifier les informations", :data => {:disable_with => "Veuillez patienter"}, :class => "btn") do %>
+                Modifier les informations<div class="icon-arrow-next icon-white"></div> 
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class = "span6">
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-list-3"></span>
+        </div>
+        <h2>Liste des moyens de paiement</h2>
+      </div>
+      <div class = "head orange" >
+		    <div class = "icon" >
+		      <span class = "ico-pen-2"></span>		      
+		    </div>  
+		    <h2>Visualisation des moyens de paiement</h2>
+		  </div>	
+		  <%= render partial: "payment_ways", :locals => {:payment_ways => @payment_ways} %> 
+		  <% unless @payment_ways.blank? %>
+		    <div id = "pagination">
+          <%= paginate @payment_ways, :params => { :controller => :payment_ways, :action => :index } %>
+        </div>
+      <% end %> 
+    </div>
+  </div>
+</div>

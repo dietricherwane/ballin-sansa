@@ -1,0 +1,109 @@
+<div class="page-header">
+    <div class="icon">
+        <span class="ico-arrow-right"></span>
+    </div>
+    <h1>Types de banques <small>Créer un type de banque auquel associer des banques</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span6">
+    <%= render 'layouts/flash_messages' %>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+     
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-expand"></span>
+        </div>
+        <h2>Créer un type de banque</h2>
+      </div>
+      <div class = "data-fluid">
+        <%= form_tag ("/bank_type/create") do %>
+          <%#= devise_error_messages! %>
+          <div class = "<%= @namecss %>">
+            <div class = "span3">Nom</div>
+            <div class = "span9">	                      
+              <%= text_field_tag "name", params[:name], :placeholder => "Libellé du type de banque" %>                 
+            </div>            
+          </div>         
+                 
+          <div class = "row-form">
+            <div class="span9">
+              <%= button_tag(:name => "Créer un type de banque", :data => {:disable_with => "Veuillez patienter"}, :class => "btn") do %>
+                Créer un type de banque <div class="icon-arrow-next icon-white"></div> 
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class = "span6">
+    <div class = "block">
+      <div class = "head">
+        <div class = "icon">
+          <span class = "ico-list-3"></span>
+        </div>
+        <h2>Liste des types de banques</h2>
+      </div>
+      <div class = "head green" >
+		    <div class = "icon" >
+		      <span class = "ico-pen-2"></span>		      
+		    </div>  
+		    <h2>Visualisation des types de banques</h2>
+		  </div>	
+		  <div id="services">
+        <table cellpadding = "0" cellspacing = "0" width = "100%" class = "table">
+          <thead>
+            <tr>
+              <th width = "100%">Nom</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @bank_types.blank? %>
+			        <tr>
+				        <td>Aucun type de banque présent dans la base de données</td>
+			        </tr>
+		        <% else %>
+		          <% @bank_types.each do |bank_type| %>		    
+		            <tr>		        
+					        <td>
+					          <%= bank_type.name %>
+					        </td>					        
+			          </tr>
+			        <% end %>
+		        <% end %>
+          </tbody>
+        </table>	
+		  </div>	 
+		  <% unless @bank_types.blank? %>
+		    <div id = "pagination">
+          <%= paginate @bank_types, :params => { :controller => :bank_types, :action => :index } %>
+        </div>
+      <% end %> 
+    </div>
+  </div>
+</div>

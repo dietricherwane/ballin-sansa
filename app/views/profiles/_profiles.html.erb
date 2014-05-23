@@ -1,0 +1,42 @@
+<table cellpadding = "0" cellspacing = "0" width = "100%" class = "table">
+  <thead>
+    <tr>
+      <th width = "50%">Nom</th>
+      <th width = "29%">Abbréviation</th>
+      <th width = "21%">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @profiles.blank? %>
+			<tr>
+				<td colspan = "3">Aucun profil présent dans la base de données</td>
+			</tr>
+		<% else %>
+		  <% @profiles.each do |profile| %>		    
+		    <tr>
+		      <td>
+		        <%= profile.name %>	
+					</td>
+					<td>
+					  <%= profile.shortcut %>
+					</td>
+					<td>
+					  <% if current_user.profile.edit_profile %>
+					    <a href = "<%= edit_profile_path(profile.id) %>" class = "button green">
+					      <div class = "icon">			
+					        <span class = "ico-pencil"></span>		    
+					      </div>
+					    </a>
+					    <a href = "/profiles/edit_rights" class = "button blue">
+					      <div class = "icon">			
+					        <span class = "ico-random"></span>		    
+					      </div>
+					    </a>	
+					  <% end %>    
+					</td>
+			  </tr>
+			<% end %>
+		<% end %>
+  </tbody>
+</table>	
+

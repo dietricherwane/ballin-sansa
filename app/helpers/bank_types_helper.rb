@@ -1,0 +1,2 @@
+module BankTypesHelper
+end

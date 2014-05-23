@@ -1,0 +1,42 @@
+<table cellpadding = "0" cellspacing = "0" width = "100%" class = "table">
+  <thead>
+    <tr>
+      <th width = "50%">Nom</th>
+      <th width = "29%">Type</th>
+      <th width = "21%">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @banks.blank? %>
+			<tr>
+				<td colspan = "3">Aucune banque présente dans la base de données</td>
+			</tr>
+		<% else %>
+		  <% @banks.each do |bank| %>		    
+		    <tr>
+		      <td>
+		        <%= bank.name %>	
+					</td>
+					<td>
+					  <%= BankType.find_by_id(bank.bank_type_id).name %>
+					</td>
+					<td>
+					  <% if current_user.profile.edit_bank %>
+					    <a href = "/bank/edit/<%= bank.id %>" class = "button green">
+					      <div class = "icon">			
+					        <span class = "ico-pencil"></span>		    
+					      </div>
+					    </a>
+					    <% if bank.published == false %>
+				        <%= link_to "<div class = 'icon'><span class = 'ico-checkmark'></span></div>".html_safe, enable_bank_path(bank.id), :class => "button green", :confirm => "Êtes vous sûr de vouloir activer cette banque?" %>				        
+				      <% else %>
+				        <%= link_to "<div class = 'icon'><span class = 'ico-remove'></span></div>".html_safe, disable_bank_path(bank.id), :class => "button red", :confirm => "Êtes vous sûr de vouloir désactiver cette banque?" %>
+				      <% end %>
+					  <% end %>			    
+					</td>
+			  </tr>
+			<% end %>
+		<% end %>
+  </tbody>
+</table>	
+

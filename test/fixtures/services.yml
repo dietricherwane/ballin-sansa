@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  code: MyString
+  name: MyString
+  sales_area: MyString
+  url_on_success: MyString
+  url_on_error: MyString
+  url_on_session_expired: MyString
+  url_on_hold_success: MyString
+  url_on_hold_error: MyString
+  url_on_hold_listener: MyString
+  published: false
+  url_on_basket_already_paid: MyString
+  notified_to_hubs_front_office: false
+  notified_to_hubs_back_office: false
+
+two:
+  code: MyString
+  name: MyString
+  sales_area: MyString
+  url_on_success: MyString
+  url_on_error: MyString
+  url_on_session_expired: MyString
+  url_on_hold_success: MyString
+  url_on_hold_error: MyString
+  url_on_hold_listener: MyString
+  published: false
+  url_on_basket_already_paid: MyString
+  notified_to_hubs_front_office: false
+  notified_to_hubs_back_office: false

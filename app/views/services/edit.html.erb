@@ -1,0 +1,206 @@
+<script type="text/javascript" language="JavaScript">
+  $(document).on('ready page:load', function(){
+    $(function(){
+      $("#delayed_payment_section").hide();
+      if ("<%= params[:delayed_payment_radio_button_group_yes] %>" == "true"){
+        $("#delayed_payment_section").show();
+      }
+    });
+    
+    var $delayed_payment_radio_value = $('input[name=delayed_payment_radio_button_group]').change(function(){
+      if ($delayed_payment_radio_value.filter(':checked').val() == "true"){
+        $("#delayed_payment_section").show();
+      } 
+      else{
+        $("#delayed_payment_section").hide();
+      }     
+    });
+  });
+</script>
+
+<div class="page-header">
+    <div class="icon">
+        <span class="ico-arrow-right"></span>
+    </div>
+    <h1>Edition de service <small>Modification d'un service</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span6">
+    <%#= render 'layouts/flash_messages' %>    
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !flash[:notice].blank? %>  
+      <div class = "alert alert-info">  
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+     
+    <div class = "block">
+      <div class = "head">
+        <h2><%= @service.name %></h2>
+      </div>
+      <div class = "data-fluid">
+        <%= form_tag("/service/update") do %>
+          <%= hidden_field_tag "id", @service.id %>
+          <div class = "<%= @codecss %>">
+            <div class = "span3">Code</div>
+            <div class = "span9">	                      
+              <%= text_field_tag "code", @service.code %>    
+            </div>
+          </div>
+          <div class = "<%= @namecss %>">
+            <div class = "span3">Nom</div>
+            <div class = "span9">	                      
+              <%= text_field_tag "name", @service.name %>    
+            </div>
+          </div>
+          <div class = "<%= @sales_areacss %>">
+            <div class = "span3">Domaine de vente</div>
+            <div class = "span9">	        
+              <%= text_field_tag "sales_area", @service.sales_area %>
+            </div>
+          </div>
+          <div class = "<%= @compensation_idcss %>">
+            <div class = "span3">Compenses</div>
+            <div class = "span9">		        
+              <%= collection_select(:post, :compensation_id, @compensations, :id, :label, options ={:prompt => true, :selected => @service.compensation_id}) %>
+            </div>
+          </div>
+          <div class = "<%= @url_on_successcss %>">
+            <div class = "span3">Succès de transaction</div>
+            <div class = "span9">	        
+              <%= text_field_tag "url_on_success", @service.url_on_success %>
+              <span class = "bottom">
+                <b>Paramètres renvoyés:</b><br /> ?order_id=xxx&status_id=1
+              </span> 
+            </div>
+          </div>
+          <div class = "<%= @url_to_ipncss %>">
+            <div class = "span3">Ecouteur de succès</div>
+            <div class = "span9">	        
+              <%= text_field_tag "url_to_ipn", @service.url_to_ipn, :placeholder => "Url de l'écouteur en cas de succès d'une transaction" %>
+              <span class = "bottom">
+                <b>Paramètres renvoyés:</b><br /> ?order_id=xxx&transaction_id=xxx&status_id=1
+              </span> 
+            </div>
+          </div>
+          <div class = "<%= @url_on_errorcss %>">
+            <div class = "span3">Echec de transaction</div>
+            <div class = "span9">	        
+              <%= text_field_tag "url_on_error", @service.url_on_error %>
+              <span class = "bottom">
+                <b>Paramètres renvoyés:</b><br /> ?order_id=xxx&status_id=0
+              </span>
+            </div>
+          </div>
+          <div class = "<%= @url_on_session_expiredcss %>">
+            <div class = "span3">Session expirée</div>
+            <div class = "span9">	        
+              <%= text_field_tag "url_on_session_expired", @service.url_on_session_expired %>
+              <span class = "bottom">
+                <b>Paramètre renvoyé:</b><br /> ?status_id=2
+              </span>
+            </div>
+          </div>
+          <div class = "<%= @url_on_basket_already_paidcss %>">
+            <div class = "span3">Panier déjà payé</div>
+            <div class = "span9">	        
+              <%= text_field_tag "url_on_basket_already_paid", @service.url_on_basket_already_paid %>
+              <span class = "bottom">
+                <b>Paramètres renvoyés:</b><br /> ?order_id=xxx&status_id=3
+              </span>
+            </div>
+          </div>
+          <div class = "row-form">
+            <div class = "span3">Virement bancaire autorisé?</div>
+            <div class = "span9">	 
+              <div class = "radio">                
+                <!--<input type = "radio" name = "delayed_payment_radio_button_group" value = "1" /> -->  
+                <%= radio_button_tag "delayed_payment_radio_button_group", "true", params[:delayed_payment_radio_button_group_yes] %>              
+              </div>Oui      
+              <div class = "radio">                
+                <!--<input type = "radio" checked = "checked" name = "delayed_payment_radio_button_group" value = "0" />       -->         
+                <%= radio_button_tag "delayed_payment_radio_button_group", "false", params[:delayed_payment_radio_button_group_no] %> 
+              </div>Non
+            </div>
+          </div>
+          
+          <div id = "delayed_payment_section">
+            <div class = "<%= @url_on_hold_successcss %>">
+              <div class = "span3">Succès de paiement différé</div>
+              <div class = "span9">	        
+                <%= text_field_tag "url_on_hold_success", @service.url_on_hold_success %>
+                <span class = "bottom">
+                  <b>Paramètres renvoyés:</b><br /> ?order_id=xxx&status_id=1
+                </span>
+              </div>
+            </div>
+            <div class = "<%= @url_on_hold_errorcss %>">
+              <div class = "span3">Echec de paiement différé</div>
+              <div class = "span9">	        
+                <%= text_field_tag "url_on_hold_error", @service.url_on_hold_error %>
+                <span class = "bottom">
+                  <b>Paramètres renvoyés:</b><br /> ?order_id=xxx&status_id=0
+                </span>
+              </div>
+            </div>
+            <div class = "<%= @url_on_hold_listenercss %>">
+              <div class = "span3">Ecouteur de paiement différé</div>
+              <div class = "span9">	        
+                <%= text_field_tag "url_on_hold_listener", @service.url_on_hold_listener %>
+                <span class = "bottom">
+                  <b>Paramètres renvoyés:</b><br /> ?order_id=xxx&status_id=2
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div class = "row-form">
+            <div class="span9">
+              <%= button_tag(:name => "Modifier le service", :class => "btn", :data => {:disable_with => "Veuillez patienter"}) do %>
+               Modifier le service <div class="icon-arrow-next icon-white"></div> 
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class = "span6">
+    <div class = "block">
+      <div class = "head">
+        <h2>Liste des opérations du service</h2>
+      </div>
+      <div class = "head green" >
+		    <div class = "icon" >
+		      <span class = "ico-pen-2"></span>		      
+		    </div>  
+		    <h2>Visualisation des types d'opérations</h2>
+		  </div>		  
+		  <%= render 'operations_types', :locals => {:operations_types => @operations_types} %>  	  
+    </div>
+  </div>
+</div>

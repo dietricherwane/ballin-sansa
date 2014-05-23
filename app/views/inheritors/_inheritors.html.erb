@@ -1,0 +1,71 @@
+<script type="text/javascript" language="JavaScript">
+  $(document).on('ready page:load', function(){    
+    options =	{ 
+			position : 'top',
+			align	 : 'center',						
+			innerHtmlStyle: {
+								color:'#FFFFFF', 
+								'text-align':'left',
+								padding:'2px',
+								'font-size':'13px'
+							},																
+			themeName: 	'all-grey',
+			themePath: 	'../../../images/jquerybubblepopup-theme'
+		};  
+  });
+</script>
+
+<table cellpadding = "0" cellspacing = "0" width = "100%" class = "table">
+  <thead>
+    <tr>
+      <th width = "34%">Nom</th>
+      <th width = "25%">Numéro de compte</th>
+      <th width = "20%">Type</th>
+      <th width = "21%">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @inheritors.blank? %>
+			<tr>
+				<td colspan = "3">Aucun ayant droit présent dans la base de données</td>
+			</tr>
+		<% else %>
+		  <% @inheritors.each do |inheritor| %>		    
+		    <tr>
+		      <td>
+		        <script type="text/javascript">	
+			        $(document).on('ready page:load', function(){    
+				        options['innerHtml'] = "Numéro de téléphone: <%= inheritor.phone_number %><br>Email: <%= inheritor.email %><br>Adresse: <%= inheritor.address %>";								
+				        $("#inheritor_<%= inheritor.id %>").CreateBubblePopup( options );
+			        });
+			      </script>
+			      <%= div_for (inheritor) do %>
+		          <%= inheritor.name %>	
+						<% end %>
+					</td>
+					<td>
+					  <%= inheritor.account_number %>
+					</td>
+					<td>
+					  <%= InheritorType.find_by_id(inheritor.inheritor_type_id).label %>
+					</td>
+					<td>
+					  <% if current_user.profile.edit_inheritor %>
+					    <a href = "/inheritor/link_to_operation/<%= inheritor.id %>" class = "button blue">
+					      <div class = "icon">			
+					        <span class = "ico-random"></span>		    
+					      </div>
+					    </a>
+					    <a href = "/inheritor/edit/<%= inheritor.id %>" class = "button green">
+					      <div class = "icon">			
+					        <span class = "ico-pencil"></span>		    
+					      </div>
+					    </a>	
+					  <% end %>			    
+					</td>
+			  </tr>
+			<% end %>
+		<% end %>
+  </tbody>
+</table>	
+

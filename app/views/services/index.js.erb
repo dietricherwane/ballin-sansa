@@ -1,0 +1,3 @@
+$('#services').html('<%= escape_javascript render 'services', :locals => {:services => @services} %>');
+
+$('#pagination').html('<%= escape_javascript(paginate(@services, :params => { :controller => :services, :action => :index }, :remote => true).to_s) %>');

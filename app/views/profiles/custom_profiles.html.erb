@@ -1,0 +1,45 @@
+<div class="page-header">
+    <div class="icon">
+      <span class="ico-arrow-right"></span>
+    </div>
+    <h1>Profil personnalisé <small>Vous avez accès à un ensemble de fonctionnalités prédéfinies par l'administrateur</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span12">
+    <%= render 'layouts/flash_messages' %>
+    <div id = "custom_messages">
+    </div>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+     
+    <div class = "block">      
+      <div class = "data-fluid">
+        <div class = "errorContainer"> 
+          <h2>Bienvenue sur l'interface d'administration du HUB monétique</h2>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

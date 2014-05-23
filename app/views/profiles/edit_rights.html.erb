@@ -1,0 +1,266 @@
+<script type="text/javascript" language="JavaScript">
+  $(document).on('ready page:load', function(){  
+    options =	{ 
+			position : 'top',
+			align	 : 'center',						
+			innerHtmlStyle: {
+								color:'#FFFFFF', 
+								'text-align':'left',
+								padding:'2px',
+								'font-size':'13px'
+							},																
+			themeName: 	'all-grey',
+			themePath: 	'../../../images/jquerybubblepopup-theme'
+		};          
+  });
+</script>
+
+<div class="page-header">
+    <div class="icon">
+      <span class="ico-arrow-right"></span>
+    </div>
+    <h1>Profils <small>Attribuer ou retirer des droits aux utilisateurs liés à ces profils</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span12">
+    <%= render 'layouts/flash_messages' %>
+    <div id = "custom_messages">
+    </div>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+     
+    <div class = "block">
+      <div class = "head blue">
+        <div class = "icon">
+          <i class = "ico-layout-9"></i>
+        </div>
+        <h2>Liste des profils</h2>
+      </div>
+      <div class = "data-fluid">
+        <table class = "table" cellpading = "0" cellspacing = "0" width = "100%">
+          <thead>
+            <tr>
+              <th width = "61%">
+                Droits
+              </th>
+              <th width = "39%">
+                Nom du profil
+              </th>                           
+            </tr>
+          </thead>
+          <tbody>
+            <% if @profiles.blank? %>
+              <tr>
+                <td colspan = "2">Aucun profil à afficher</td>
+              </tr>
+            <% else %>
+              <% @profiles.each do |profile| %>                
+                <tr>                 
+                  <td>
+                    <script type="text/javascript">	
+		                  $(document).on('ready page:load', function(){    
+			                  options['innerHtml'] = "Activer le droit de création d'utilisateurs.";								
+			                  $("#enable_create_user_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de création d'utilisateurs.";								
+			                  $("#disable_create_user_<%= profile.id %>").CreateBubblePopup( options ); 
+			                  
+			                  options['innerHtml'] = "Activer le droit de modification de profils utilisateurs.";								
+			                  $("#enable_edit_user_data_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de modification de profils utilisateurs.";								
+			                  $("#disable_edit_user_data_<%= profile.id %>").CreateBubblePopup( options ); 
+			                  
+			                  options['innerHtml'] = "Activer le droit de création de services.";								
+			                  $("#enable_create_service_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de création de services.";								
+			                  $("#disable_create_service_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de modification de services.";								
+			                  $("#enable_edit_service_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de modification de services.";								
+			                  $("#disable_edit_service_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de création d'opérations.";								
+			                  $("#enable_create_operation_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de création d'opérations.";								
+			                  $("#disable_create_operation_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de modification d'opérations.";								
+			                  $("#enable_edit_operation_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de modification d'opérations.";								
+			                  $("#disable_edit_operation_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de création d'ayants droits.";								
+			                  $("#enable_create_inheritor_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de création d'ayants droits.";								
+			                  $("#disable_create_inheritor_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de modification d'ayants droits.";								
+			                  $("#enable_edit_inheritor_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de modification d'ayants droits.";								
+			                  $("#disable_edit_inheritor_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de création de banques.";								
+			                  $("#enable_create_bank_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de création de banques.";								
+			                  $("#disable_create_bank_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de modification de banques.";								
+			                  $("#enable_edit_bank_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de modification de banques.";								
+			                  $("#disable_edit_bank_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de création de moyens de paiement.";								
+			                  $("#enable_create_wallet_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de création de moyens de paiement.";								
+			                  $("#disable_create_wallet_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de modification de moyens de paiement.";								
+			                  $("#enable_edit_wallet_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de modification de moyens de paiement.";								
+			                  $("#disable_edit_wallet_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de visualisation des transactions.";								
+			                  $("#enable_view_transactions_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de visualisation des transactions.";								
+			                  $("#disable_view_transactions_<%= profile.id %>").CreateBubblePopup( options );
+			                  
+			                  options['innerHtml'] = "Activer le droit de création de profils.";								
+			                  $("#enable_create_profile_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de création de profils.";								
+			                  $("#disable_create_profile_<%= profile.id %>").CreateBubblePopup( options );  
+			                  
+			                  options['innerHtml'] = "Activer le droit de modification de profils.";								
+			                  $("#enable_edit_profile_<%= profile.id %>").CreateBubblePopup( options );
+			                  options['innerHtml'] = "Désactiver le droit de modification de profils.";								
+			                  $("#disable_edit_profile_<%= profile.id %>").CreateBubblePopup( options );                                                                          
+		                  });
+		                </script>
+                    <% if profile.create_user == false or profile.create_user.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-monitor'></span></div>".html_safe, enable_create_user_right_path(profile.id), :class => "button green", :id => "enable_create_user_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création d'utilisateurs?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-monitor'></span></div>".html_safe, disable_create_user_right_path(profile.id), :class => "button red", :id => "disable_create_user_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création d'utilisateurs?" %>
+					          <% end %>
+					          
+					          <% if profile.edit_user_data == false or profile.edit_user_data.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, enable_edit_user_data_right_path(profile.id), :class => "button blue", :id => "enable_edit_user_data_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de profils utilisateurs?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, disable_edit_user_data_right_path(profile.id), :class => "button yellow", :id => "disable_edit_user_data_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de profils utilisateurs?" %>
+					          <% end %>
+					          
+					          <% if profile.create_profile == false or profile.create_profile.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, enable_create_profile_right_path(profile.id), :class => "button green", :id => "enable_create_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création de profils?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, disable_create_profile_right_path(profile.id), :class => "button red", :id => "disable_create_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création de profils?" %>
+					          <% end %>
+					          
+					          <% if profile.edit_profile == false or profile.edit_profile.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, enable_edit_profile_right_path(profile.id), :class => "button blue", :id => "enable_edit_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de profils.?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, disable_edit_profile_right_path(profile.id), :class => "button yellow", :id => "disable_edit_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de profils.?" %>
+					          <% end %>
+					          
+					          <% if profile.create_service == false or profile.create_service.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-move'></span></div>".html_safe, enable_create_service_right_path(profile.id), :class => "button green", :id => "enable_create_service_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création de services?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-move'></span></div>".html_safe, disable_create_service_right_path(profile.id), :class => "button red", :id => "disable_create_service_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création de services?" %>
+					          <% end %>
+					          
+					          <% if profile.edit_service == false or profile.edit_service.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-move'></span></div>".html_safe, enable_edit_service_right_path(profile.id), :class => "button blue", :id => "enable_edit_service_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de services?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-move'></span></div>".html_safe, disable_edit_service_right_path(profile.id), :class => "button yellow", :id => "disable_edit_service_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de services?" %>
+					          <% end %>
+					          
+					          <% if profile.create_operation == false or profile.create_operation.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-resize-horizontal'></span></div>".html_safe, enable_create_operation_right_path(profile.id), :class => "button green", :id => "enable_create_operation_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création d'opérations?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-resize-horizontal'></span></div>".html_safe, disable_create_operation_right_path(profile.id), :class => "button red", :id => "disable_create_operation_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création d'opérations?" %>
+					          <% end %>
+					          
+					          <% if profile.edit_operation == false or profile.edit_operation.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-resize-horizontal'></span></div>".html_safe, enable_edit_operation_right_path(profile.id), :class => "button blue", :id => "enable_edit_operation_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification d'opérations?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-resize-horizontal'></span></div>".html_safe, disable_edit_operation_right_path(profile.id), :class => "button yellow", :id => "disable_edit_operation_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification d'opérations?" %>
+					          <% end %>
+					          
+					          <% if profile.create_inheritor == false or profile.create_inheritor.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, enable_create_inheritor_right_path(profile.id), :class => "button green", :id => "enable_create_inheritor_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création d'ayants droits?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, disable_create_inheritor_right_path(profile.id), :class => "button red", :id => "disable_create_inheritor_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création d'ayants droits?" %>
+					          <% end %>
+					          
+					          <% if profile.edit_inheritor == false or profile.edit_inheritor.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, enable_edit_inheritor_right_path(profile.id), :class => "button blue", :id => "enable_edit_inheritor_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification d'ayants droits?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, disable_edit_inheritor_right_path(profile.id), :class => "button yellow", :id => "disable_edit_inheritor_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification d'ayants droits?" %>
+					          <% end %>
+					          
+					          <% if profile.create_bank == false or profile.create_bank.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money-bag'></span></div>".html_safe, enable_create_bank_right_path(profile.id), :class => "button green", :id => "enable_create_bank_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création de banques?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money-bag'></span></div>".html_safe, disable_create_bank_right_path(profile.id), :class => "button red", :id => "disable_create_bank_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création de banques?" %>
+					          <% end %>
+					          
+					          <% if profile.edit_bank == false or profile.edit_bank.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money-bag'></span></div>".html_safe, enable_edit_bank_right_path(profile.id), :class => "button blue", :id => "enable_edit_bank_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de banques?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money-bag'></span></div>".html_safe, disable_edit_bank_right_path(profile.id), :class => "button yellow", :id => "disable_edit_bank_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de banques?" %>
+					          <% end %>
+					          
+					          <% if profile.create_wallet == false or profile.create_wallet.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money'></span></div>".html_safe, enable_create_wallet_right_path(profile.id), :class => "button green", :id => "enable_create_wallet_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création de moyens de paiement?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money'></span></div>".html_safe, disable_create_wallet_right_path(profile.id), :class => "button red", :id => "disable_create_wallet_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création de moyens de paiement?" %>
+					          <% end %>
+					          
+					          <% if profile.edit_wallet == false or profile.edit_wallet.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money'></span></div>".html_safe, enable_edit_wallet_right_path(profile.id), :class => "button blue", :id => "enable_edit_wallet_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de moyens de paiement?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-money'></span></div>".html_safe, disable_edit_wallet_right_path(profile.id), :class => "button yellow", :id => "disable_edit_wallet_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de moyens de paiement?" %>
+					          <% end %>
+					          
+					          <% if profile.view_transactions == false or profile.view_transactions.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-globe-2'></span></div>".html_safe, enable_view_transactions_right_path(profile.id), :class => "button green", :id => "enable_view_transactions_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de visualisation des transactions?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-globe-2'></span></div>".html_safe, disable_view_transactions_right_path(profile.id), :class => "button red", :id => "disable_view_transactions_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de visualisation des transactions?" %>
+					          <% end %>					          					          
+                  </td>   
+                  <td>
+                    <%= profile.name %>
+                  </td>               
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        <% unless @profiles.blank? %>
+		      <div id = "pagination">
+            <%= paginate @profiles, :params => { :controller => :profiles, :action => :edit_rights } %>
+          </div>
+        <% end %> 
+      </div>
+    </div>
+  </div> 
+</div>

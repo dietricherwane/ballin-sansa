@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  service_id: 1
+  credit_status: 1
+
+two:
+  name: MyString
+  service_id: 1
+  credit_status: 1
