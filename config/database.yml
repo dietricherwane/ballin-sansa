@@ -21,7 +21,7 @@ development:
   username: o1
   password: com99123
   host: localhost
-  port: 5432
+  port: 1988
   encoding: utf8
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -52,7 +52,7 @@ test:
   username: o1
   password: com99123
   host: localhost
-  port: 5432
+  port: 1988
   encoding: utf8
 
 production:
@@ -62,5 +62,5 @@ production:
   username: o1
   password: com99123
   host: localhost
-  port: 5432
+  port: 1988
   encoding: utf8

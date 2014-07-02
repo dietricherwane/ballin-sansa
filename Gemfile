@@ -70,7 +70,7 @@ gem "multi_json"
 gem 'will_paginate', '~> 3.0'
 
 # stores session variables into database
-gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'activerecord-session_store'#, github: 'rails/activerecord-session_store'
 
 # paginate database results
 gem 'kaminari'
