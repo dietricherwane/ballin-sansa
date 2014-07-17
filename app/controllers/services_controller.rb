@@ -67,7 +67,6 @@ class ServicesController < ApplicationController
       
       unless @error   
         # communication with back office
-        @duke = "#{@@parameters.hubs_back_office_url}/GATEWAY/rest/BACKOFFICE_SERVICE/CreateService/#{@name}/#{@compensation.cuid}/#{@code}"
         @request = Typhoeus::Request.new("#{@@parameters.hubs_back_office_url}/GATEWAY/rest/BACKOFFICE_SERVICE/CreateService/#{@name}/#{@compensation.cuid}/#{@code}", followlocation: true)        
         @internal_com_request = "@response = Nokogiri.XML(request.response.body)
         @response.xpath('//status').each do |link|
